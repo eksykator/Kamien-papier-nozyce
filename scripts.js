@@ -2,13 +2,21 @@ var paperButton = document.getElementById('paper-button');
 var rockButton = document.getElementById('rock-button');
 var scissorsButton = document.getElementById('scissors-button');
 var outputDiv = document.getElementById('output');
+var resultDiv = document.getElementById('result');
 
 var paper = 1;
 var rock = 2;
 var scissors = 3;
+var scoreUser = 0;
+var scoreComputer = 0;
+
+
+function printScore() 
+{
+    resultDiv.textContent = scoreUser + ' - ' + scoreComputer;
+}
 
 function playerMove(playerChoose) {
-    console.log(playerChoose);
     var computerMove = randomComputerMove();
     
     if (playerChoose === paper) {
@@ -16,8 +24,10 @@ function playerMove(playerChoose) {
             printOutput('', playerChoose, computerMove);
         } else if (computerMove === 2) {
             printOutput('user', playerChoose, computerMove);
+            scoreUser++;
         } else {
             printOutput('computer', playerChoose, computerMove);
+            scoreComputer++;
         }
             
     } else if (playerChoose === rock) {
@@ -25,8 +35,10 @@ function playerMove(playerChoose) {
             printOutput('', playerChoose, computerMove);
         } else if (computerMove === 3) {
             printOutput('user', playerChoose, computerMove); 
+            scoreUser++;
         } else {
             printOutput('computer', playerChoose, computerMove);
+            scoreComputer++;
         }
     
     } else {
@@ -34,33 +46,15 @@ function playerMove(playerChoose) {
             printOutput('', playerChoose, computerMove);
         } else if (computerMove === 1) {
             printOutput('user', playerChoose, computerMove); 
+            scoreUser++;
         } else {
             printOutput('computer', playerChoose, computerMove);
+            scoreComputer++;
         }
-    }                                                            
+    }
+    
+    printScore();
 };
-
-function randomComputerMove()
-{
-    var computerMove = Math.round(Math.random() * 2 + 1);
-    return computerMove;
-}
-
-paperButton.addEventListener('click', function()
-{
-    playerMove(paper);
-});
-
-rockButton.addEventListener('click', function()
-{
-    playerMove(rock);
-});
-
-scissorsButton.addEventListener('click', function()
-{
-    playerMove(scissors);
-});
-
 
 function printOutput(winner, userMove, computerMove) {
     
@@ -96,3 +90,27 @@ function printOutput(winner, userMove, computerMove) {
     
     outputDiv.textContent = text;
 };
+
+function randomComputerMove()
+{
+    var computerMove = Math.round(Math.random() * 2 + 1);
+    return computerMove;
+}
+
+printScore();
+
+paperButton.addEventListener('click', function()
+{
+    playerMove(paper);
+});
+
+rockButton.addEventListener('click', function()
+{
+    playerMove(rock);
+});
+
+scissorsButton.addEventListener('click', function()
+{
+    playerMove(scissors);
+});
+
