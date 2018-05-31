@@ -1,6 +1,7 @@
 var paperButton = document.getElementById('paper-button');
 var rockButton = document.getElementById('rock-button');
 var scissorsButton = document.getElementById('scissors-button');
+var outputDiv = document.getElementById('output');
 
 var paper = 1;
 var rock = 2;
@@ -12,29 +13,29 @@ function playerMove(playerChoose) {
     
     if (playerChoose === paper) {
         if (computerMove === 1) {
-            console.log("REMIS");
+            printOutput('', playerChoose, computerMove);
         } else if (computerMove === 2) {
-            console.log("WYGRAŁEŚ");
+            printOutput('user', playerChoose, computerMove);
         } else {
-        console.log("PRZEGRAŁEŚ!")
+            printOutput('computer', playerChoose, computerMove);
         }
             
     } else if (playerChoose === rock) {
         if (computerMove === 2) {
-            console.log("REMIS");
-        } else if (computerMove === 1) {
-            console.log("WYGRAŁEŚ!"); 
+            printOutput('', playerChoose, computerMove);
+        } else if (computerMove === 3) {
+            printOutput('user', playerChoose, computerMove); 
         } else {
-            console.log("PRZEGRAŁEŚ!");
+            printOutput('computer', playerChoose, computerMove);
         }
     
     } else {
         if (computerMove === 3) {
-            console.log("REMIS");
+            printOutput('', playerChoose, computerMove);
         } else if (computerMove === 1) {
-            console.log("WYGRAŁEŚ!"); 
+            printOutput('user', playerChoose, computerMove); 
         } else {
-            console.log("PRZEGRAŁEŚ!")
+            printOutput('computer', playerChoose, computerMove);
         }
     }                                                            
 };
@@ -48,45 +49,50 @@ function randomComputerMove()
 paperButton.addEventListener('click', function()
 {
     playerMove(paper);
-    
-    /*var computerMove = randomComputerMove();
-    
-    if (computerMove === 1) {
-        console.log("REMIS");
-    } else if (computerMove === 2) {
-       console.log("WYGRAŁEŚ!"); 
-    } else {
-        console.log("PRZEGRAŁEŚ!")
-    }*/
-    
 });
 
 rockButton.addEventListener('click', function()
 {
     playerMove(rock);
-   /* var computerMove = randomComputerMove();
-    
-    if (computerMove === 2) {
-        console.log("REMIS");
-    } else if (computerMove === 1) {
-       console.log("WYGRAŁEŚ!"); 
-    } else {
-        console.log("PRZEGRAŁEŚ!")
-    }*/
 });
 
 scissorsButton.addEventListener('click', function()
 {
     playerMove(scissors);
-    /*var computerMove = randomComputerMove();
-    
-    if (computerMove === 3) {
-        console.log("REMIS");
-    } else if (computerMove === 1) {
-       console.log("WYGRAŁEŚ!"); 
-    } else {
-        console.log("PRZEGRAŁEŚ!")
-    }*/
 });
 
 
+function printOutput(winner, userMove, computerMove) {
+    
+    var text;
+    
+    if (winner === 'user') {
+        text = 'YOU WON!'
+    } else if (winner === 'computer') {
+        text = "COMPUTER WON!"
+    } else {
+        text = "DRAW! ";
+    }
+    
+    text += ' You played ';
+    
+    if (userMove === paper) {
+        text += "PAPER";
+    } else if (userMove === rock) {
+        text += "ROCK";
+    } else {
+        text += "SCISSORS";
+    }
+    
+    text += ', computer played ';
+    
+    if (computerMove === paper) {
+        text += "PAPER";
+    } else if (computerMove === rock) {
+        text += "ROCK";
+    } else {
+        text += "SCISSORS";
+    }
+    
+    outputDiv.textContent = text;
+};
