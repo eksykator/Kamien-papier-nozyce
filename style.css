@@ -1,0 +1,23 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    
+}
+
+.container {
+    width: 700px;
+    margin: 0 auto;
+    background-color:#C8CBCC;
+    text-align: center;
+}
+
+button {
+    background-color: #0DA844;
+    border: none;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    margin: 10px;
+    
+}
