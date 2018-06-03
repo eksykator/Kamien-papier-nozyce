@@ -7,25 +7,29 @@ var newGameButton = document.getElementById('new-game-button');
 var numberOfRoundsDiv = document.getElementById('number-of-rounds');
 var infoDiv = document.getElementById('info');
 
+var params = {
+    scoreUser: 0,
+    scoreComputer: 0,
+    numberOfRounds: undefined,
+    numberOfFinishedRounds: 0
+};
+
 var paper = 1;
 var rock = 2;
 var scissors = 3;
-var scoreUser = 0;
-var scoreComputer = 0;
-var numberOfRounds;
-var numberOfFinishedRounds = 0;
+
 
 
 function printNumberOfRounds() 
 {
     var text = ', number of rounds to win: ';
-    if (numberOfRounds % 2 === 0) {
-        text += numberOfRounds/2 + 1;
+    if (params.numberOfRounds % 2 === 0) {
+        text += params.numberOfRounds/2 + 1;
     } else {
-        text += Math.ceil(numberOfRounds/2);
+        text += Math.ceil(params.numberOfRounds/2);
     }
     
-    numberOfRoundsDiv.textContent = 'Number of rounds: ' + numberOfRounds + ', number of finished round: ' + numberOfFinishedRounds + text 
+    numberOfRoundsDiv.textContent = 'Number of rounds: ' + params.numberOfRounds + ', number of finished round: ' + params.numberOfFinishedRounds + text 
 }
 
 
@@ -35,10 +39,10 @@ newGameButton.addEventListener('click', function()
     if (isNaN(value) || value === '' || value === null || value <= 0) {
         alert('Incorrect value');
     } else {
-        numberOfRounds = parseInt(value);
-        numberOfFinishedRounds = 0;
-        scoreUser = 0;
-        scoreComputer = 0;
+        params.numberOfRounds = parseInt(value);
+        params.numberOfFinishedRounds = 0;
+        params.scoreUser = 0;
+        params.scoreComputer = 0;
         printScore();
         printNumberOfRounds();
         outputDiv.textContent = '';
@@ -49,12 +53,12 @@ newGameButton.addEventListener('click', function()
 
 function printScore() 
 {
-    resultDiv.textContent = scoreUser + ' - ' + scoreComputer;
+    resultDiv.textContent = params.scoreUser + ' - ' + params.scoreComputer;
 }
 
 function playerMove(playerChoose)
 {
-    if (numberOfFinishedRounds === numberOfRounds) {
+    if (params.numberOfFinishedRounds === params.numberOfRounds) {
         infoDiv.textContent = 'GAME OVER! Please press the  new game button!';
         return;
     }
@@ -66,10 +70,10 @@ function playerMove(playerChoose)
             printOutput('', playerChoose, computerMove);
         } else if (computerMove === 2) {
             printOutput('user', playerChoose, computerMove);
-            scoreUser++;
+            params.scoreUser++;
         } else {
             printOutput('computer', playerChoose, computerMove);
-            scoreComputer++;
+            params.scoreComputer++;
         }
             
     } else if (playerChoose === rock) {
@@ -77,10 +81,10 @@ function playerMove(playerChoose)
             printOutput('', playerChoose, computerMove);
         } else if (computerMove === 3) {
             printOutput('user', playerChoose, computerMove); 
-            scoreUser++;
+            params.scoreUser++;
         } else {
             printOutput('computer', playerChoose, computerMove);
-            scoreComputer++;
+            params.scoreComputer++;
         }
     
     } else {
@@ -88,21 +92,21 @@ function playerMove(playerChoose)
             printOutput('', playerChoose, computerMove);
         } else if (computerMove === 1) {
             printOutput('user', playerChoose, computerMove); 
-            scoreUser++;
+            params.scoreUser++;
         } else {
             printOutput('computer', playerChoose, computerMove);
-            scoreComputer++;
+            params.scoreComputer++;
         }
     }
     
     printScore();
-    numberOfFinishedRounds++;
+    params.numberOfFinishedRounds++;
     printNumberOfRounds();
     
-    if (numberOfFinishedRounds === numberOfRounds) {
-        if (scoreComputer > scoreUser) {
+    if (params.numberOfFinishedRounds === params.numberOfRounds) {
+        if (params.scoreComputer > params.scoreUser) {
             numberOfRoundsDiv.textContent = 'COMPUTER WON ALL GAME!';
-        } else if (scoreComputer < scoreUser) {
+        } else if (params.scoreComputer < params.scoreUser) {
             numberOfRoundsDiv.textContent = 'USER WON ALL GAME!';
         } else {
             numberOfRoundsDiv.textContent = "DRAW!";
