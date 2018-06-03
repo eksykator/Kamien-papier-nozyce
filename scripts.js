@@ -153,18 +153,13 @@ function randomComputerMove()
 
 printScore();
 
-paperButton.addEventListener('click', function()
-{
-    playerMove(paper);
-});
+function buttonClickEvent() {
+    var valueDataMove = this.getAttribute('data-move');
+    valueDataMove = parseInt(valueDataMove);
+    playerMove(valueDataMove);
+}
 
-rockButton.addEventListener('click', function()
-{
-    playerMove(rock);
-});
-
-scissorsButton.addEventListener('click', function()
-{
-    playerMove(scissors);
-});
-
+var buttons = document.querySelectorAll('.player-move');
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', buttonClickEvent);
+}
