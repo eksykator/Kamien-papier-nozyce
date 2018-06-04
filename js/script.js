@@ -6,6 +6,8 @@ var resultDiv = document.getElementById('result');
 var newGameButton = document.getElementById('new-game-button');
 var numberOfRoundsDiv = document.getElementById('number-of-rounds');
 var infoDiv = document.getElementById('info');
+var modalDiv = document.querySelector('.modal');
+var modalContent = document.querySelector('.modal .content');
 
 var params = {
     scoreUser: 0,
@@ -34,7 +36,6 @@ function printNumberOfRounds() {
     
     numberOfRoundsDiv.textContent = 'Number of rounds: ' + params.numberOfRounds + ', number of finished round: ' + params.numberOfFinishedRounds + text 
 }
-
 
 newGameButton.addEventListener('click', function() {
     var value = prompt('How many rounds?');
@@ -103,12 +104,7 @@ function playerMove(playerChoose) {
     params.numberOfFinishedRounds++;
     printNumberOfRounds();
     
-    
     if (params.numberOfFinishedRounds === params.numberOfRounds) {
-        
-        var modalContent = '';
-        modalContent = document.querySelector('.content');
-        
         if (params.scoreComputer > params.scoreUser) {
             modalContent.textContent = 'COMPUTER WON ALL GAME!';
         } else if (params.scoreComputer < params.scoreUser) {
@@ -172,3 +168,17 @@ var buttons = document.querySelectorAll('.player-move');
 for (var i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', buttonClickEvent);
 }
+
+function closeModal() {
+    document.querySelector('#modal-overlay').classList.remove('show');
+    modalDiv.classList.remove('show');
+}
+
+var closeButton = document.querySelector('.close');
+closeButton.addEventListener('click', closeModal);
+
+document.querySelector('#modal-overlay').addEventListener('click', closeModal);
+
+modalDiv.addEventListener('click', function(event) {
+    event.stopPropagation();
+});
