@@ -19,9 +19,12 @@ var rock = 2;
 var scissors = 3;
 
 
+function openModal() {
+    document.getElementById('modal-overlay').classList.add('show');
+    document.querySelector('.modal').classList.add('show');
+}
 
-function printNumberOfRounds() 
-{
+function printNumberOfRounds() {
     var text = ', number of rounds to win: ';
     if (params.numberOfRounds % 2 === 0) {
         text += params.numberOfRounds/2 + 1;
@@ -33,8 +36,7 @@ function printNumberOfRounds()
 }
 
 
-newGameButton.addEventListener('click', function()
-{
+newGameButton.addEventListener('click', function() {
     var value = prompt('How many rounds?');
     if (isNaN(value) || value === '' || value === null || value <= 0) {
         alert('Incorrect value');
@@ -51,13 +53,11 @@ newGameButton.addEventListener('click', function()
     infoDiv.textContent = '';
 })
 
-function printScore() 
-{
+function printScore() {
     resultDiv.textContent = params.scoreUser + ' - ' + params.scoreComputer;
 }
 
-function playerMove(playerChoose)
-{
+function playerMove(playerChoose) {
     if (params.numberOfFinishedRounds === params.numberOfRounds) {
         infoDiv.textContent = 'GAME OVER! Please press the  new game button!';
         return;
@@ -103,19 +103,25 @@ function playerMove(playerChoose)
     params.numberOfFinishedRounds++;
     printNumberOfRounds();
     
+    
     if (params.numberOfFinishedRounds === params.numberOfRounds) {
+        
+        var modalContent = '';
+        modalContent = document.querySelector('.content');
+        
         if (params.scoreComputer > params.scoreUser) {
-            numberOfRoundsDiv.textContent = 'COMPUTER WON ALL GAME!';
+            modalContent.textContent = 'COMPUTER WON ALL GAME!';
         } else if (params.scoreComputer < params.scoreUser) {
-            numberOfRoundsDiv.textContent = 'USER WON ALL GAME!';
+            modalContent.textContent = 'USER WON ALL GAME!';
         } else {
-            numberOfRoundsDiv.textContent = "DRAW!";
+            modalContent.textContent = "DRAW!";
         }
+        
+        openModal();
     }
 };
 
-function printOutput(winner, userMove, computerMove)
-{
+function printOutput(winner, userMove, computerMove) {
     var text;
     
     if (winner === 'user') {
@@ -149,8 +155,7 @@ function printOutput(winner, userMove, computerMove)
     outputDiv.textContent = text;
 };
 
-function randomComputerMove()
-{
+function randomComputerMove() {
     var computerMove = Math.round(Math.random() * 2 + 1);
     return computerMove;
 }
