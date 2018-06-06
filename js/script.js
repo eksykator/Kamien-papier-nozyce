@@ -13,7 +13,15 @@ var params = {
     scoreUser: 0,
     scoreComputer: 0,
     numberOfRounds: undefined,
-    numberOfFinishedRounds: 0
+    numberOfFinishedRounds: 0,
+    progress: [{userMove: 'paper',
+               computerMove: 'rock',
+               roundResult: 'user', 
+               totalResult: '1-0'},
+              {userMove: 'rock',
+               computerMove: 'paper',
+               roundResult: 'computer',
+               totalResult: '1-1'}]
 };
 
 var paper = 1;
@@ -105,12 +113,19 @@ function playerMove(playerChoose) {
     printNumberOfRounds();
     
     if (params.numberOfFinishedRounds === params.numberOfRounds) {
+        
+        for (var i = 0; i < params.progress.length; i++) {
+            var table = document.querySelector('.content table tbody');
+    
+            table.innerHTML += '<tr><td>' + (i + 1) + '</td><td>' + params.progress[i].userMove + '</td> <td>' + params.progress[i].computerMove + '</td> <td>' + params.progress[i].roundResult + '</td><td>' + params.progress[i].totalResult + '</td></tr>'
+        }
+        
         if (params.scoreComputer > params.scoreUser) {
-            modalContent.textContent = 'COMPUTER WON ALL GAME!';
+            modalContent.innerHTML += 'COMPUTER WON ALL GAME!';
         } else if (params.scoreComputer < params.scoreUser) {
-            modalContent.textContent = 'USER WON ALL GAME!';
+            modalContent.innerHTML += 'USER WON ALL GAME!';
         } else {
-            modalContent.textContent = "DRAW!";
+            modalContent.innerHTML += "DRAW!";
         }
         
         openModal();
