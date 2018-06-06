@@ -14,20 +14,23 @@ var params = {
     scoreComputer: 0,
     numberOfRounds: undefined,
     numberOfFinishedRounds: 0,
-    progress: [{userMove: 'paper',
-               computerMove: 'rock',
-               roundResult: 'user', 
-               totalResult: '1-0'},
-              {userMove: 'rock',
-               computerMove: 'paper',
-               roundResult: 'computer',
-               totalResult: '1-1'}]
+    progress: []
 };
 
 var paper = 1;
 var rock = 2;
 var scissors = 3;
 
+
+function convertOptionsMove(move) {
+    if (move === paper) {
+        return 'paper';
+    } else if (move === rock) {
+        return 'rock';
+    } else if (move === scissors) {
+        return 'scissors';
+    }
+}
 
 function openModal() {
     document.getElementById('modal-overlay').classList.add('show');
@@ -73,16 +76,21 @@ function playerMove(playerChoose) {
     }
     
     var computerMove = randomComputerMove();
+    var isUserWon = false;
+    var isComputerWon = false;
     
     if (playerChoose === paper) {
         if (computerMove === 1) {
             printOutput('', playerChoose, computerMove);
+            
         } else if (computerMove === 2) {
             printOutput('user', playerChoose, computerMove);
             params.scoreUser++;
+            isUserWon = true;
         } else {
             printOutput('computer', playerChoose, computerMove);
             params.scoreComputer++;
+            isComputerWon = true;
         }
             
     } else if (playerChoose === rock) {
@@ -91,9 +99,11 @@ function playerMove(playerChoose) {
         } else if (computerMove === 3) {
             printOutput('user', playerChoose, computerMove); 
             params.scoreUser++;
+            isUserWon = true;
         } else {
             printOutput('computer', playerChoose, computerMove);
             params.scoreComputer++;
+            isComputerWon = true;
         }
     
     } else {
@@ -102,15 +112,22 @@ function playerMove(playerChoose) {
         } else if (computerMove === 1) {
             printOutput('user', playerChoose, computerMove); 
             params.scoreUser++;
+            isUserWon = true;
         } else {
             printOutput('computer', playerChoose, computerMove);
             params.scoreComputer++;
+            isComputerWon = true;
         }
     }
     
     printScore();
     params.numberOfFinishedRounds++;
     printNumberOfRounds();
+    
+    params.progress.push({userMove: convertOptionsMove(playerChoose),
+                         computerMove: convertOptionsMove(computerMove),
+                         roundResult: (isUserWon ? '1':'0') + '-' + (isComputerWon ? '1' : '0'),
+                         totalResult: params.scoreUser + ' - ' + params.scoreComputer});
     
     if (params.numberOfFinishedRounds === params.numberOfRounds) {
         
